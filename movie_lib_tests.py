@@ -7,7 +7,8 @@ from movie_lib_main import *
 rating_instance = Rating({'user_id' : '123', 'item_id' : '456', 'rating' : 'awesomeness'})
 movie_instance = Movie({'movie_id' : '123', 'movie_title' : 'Gone With The Wind'}, {123: [5, 1]})
 user_instance = User({'user_id' : '1', 'age': '27', 'gender' : 'Male', 'occupation' : 'TIY Student', 'zip_code' : '27707'}, {1 : {57 : 5, 102: 3}})
-
+# user_list =
+# movie_list =
 
 class MovieClass(unittest.TestCase):
 
@@ -35,6 +36,8 @@ class MovieClass(unittest.TestCase):
         self.assertEqual(user_instance.all_ratings_by_user, ({57 : 5, 102: 3}))
 
 
+    # def test_remove_movies_already_rated_by_user(self):
+    #     self.assertEqual(remove_movie_if_user_has_rated(user_list, movie_list, 15))
 
 
 

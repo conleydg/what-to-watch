@@ -31,6 +31,15 @@ class Movie():
         return sorted(new_list, key=lambda k: k['average rating'])
 
 
+    @staticmethod
+    def remove_movie_if_user_has_rated(user_list, movie_list, user_id):
+        un_reviewed_movies = []
+        for movie in movie_list:
+            if movie.movie_id not in (user_list[(user_id)].all_ratings_by_user):
+                un_reviewed_movies.append(movie)
+        return un_reviewed_movies
+
+
 class User:
     def __init__(self, dictionary, all_ratings_by_user):
         self.user_id = int(dictionary['user_id'])
