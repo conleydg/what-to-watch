@@ -25,24 +25,27 @@ def create_movie_list(movie_ratings):
 
 
 
+def create_user_list(rating_list):
+    with open('u_user.csv') as f:
+        reader = csv.DictReader(f, fieldnames = ['user_id', 'age', 'gender', 'occupation', 'zip_code'], delimiter='|')
+        user_list = []
+        for row in reader:
+            user_list.append(User(row, rating_list))
+    return user_list
 
-with open('u_user.csv') as f:
-    reader = csv.DictReader(f, fieldnames = ['user_id', 'age', 'gender', 'occupation', 'zip_code'], delimiter='|')
-    user_list = []
-    for row in reader:
-        user_list.append(User(row))
 
+def top_twenty_movies(movie_list):
+    newlist = sorted(movie_list, key=lambda k: k('average_rating'))
+    return newlist
 
-def find_all_ratings_for_movie_by_id(rating_list, movie_id):
-    for movie in rating_list:
-        if movie.movie_id == movie_id:
-            print(movie.rating)
 
 
 
 def main():
 
     rating_list = create_rating_list()
+
+
 
     movie_ratings = {}
 
@@ -55,16 +58,39 @@ def main():
 
     movie_list = create_movie_list(movie_ratings)
 
-    for movie in movie_list:
-        print(str(movie))
-
-    print(movie_list[17].all_ratings)
-
-    print(sum(movie_list[17].all_ratings))
-
-    print(movie_list[17].average_rating)
+    all_ratings_for_user = {}
 
 
+
+    all_ratings_by_user = {}
+    for rating in rating_list:
+        if rating.user_id in all_ratings_by_user:
+            all_ratings_by_user[rating.user_id][rating.item_id] = rating.rating
+        else:
+            all_ratings_by_user[rating.user_id]= {rating.item_id: rating.rating}
+
+
+
+    user_list = create_user_list(all_ratings_by_user)
+
+    # top_twenty = (top_twenty_movies(movie_list))
+    #
+    #
+    # print(top_twenty)
+
+    # print(movie_list)
+    #
+    # for movie in movie_list:
+    #     print(str(movie))
+
+
+    top_twenty = Movie.print_top_twenty_movies(movie_list)
+    print(len(top_twenty))
+    print(top_twenty[-20:-1])
+
+    #
+    # for movie in movie_list:
+    #     print(movie.average_rating)
 
 
 
