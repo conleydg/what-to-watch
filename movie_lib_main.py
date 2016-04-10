@@ -67,7 +67,37 @@ def euclidean_distance(v, w):
 
     return 1 / (1 + math.sqrt(sum_of_squares))
 
-def normalized_dict_of_users(user_list, user_id, movie_list, user_list):
+def normalized_dict_of_users(user_list, movie_list):
+    normalized_dict_ratings = {}
+    user_id = 0
+    for user in user_list:
+        user_normalized = user_rating_normalized_list(user_id, movie_list, user_list)
+        normalized_dict_ratings[user_id] = user_normalized
+        user_id += 1
+    return normalized_dict_ratings
+
+
+
+def find_similar_user(normalized_dict_ratings, user_id):
+    user_index = 0
+    highest_similar_user = {}
+    v = normalized_dict_ratings[user_id]
+    for user in normalized_dict_ratings:
+        w = normalized_dict_ratings[user]
+        euc_relationship = euclidean_distance(v, w)
+        highest_similar_user[user_index] = euc_relationship
+        user_index += 1
+    highest_similar_user[user_id] -= 1
+    return highest_similar_user
+
+
+def return_movie_suggestion(user_id, most_related_user, user_list):
+    unique_movies = []
+    for movie in user_list[most_related_user - 1].all_ratings_by_user:
+        if movie not in user_list[user_id - 1].all_ratings_by_user and int(user_list[most_related_user - 1].all_ratings_by_user[movie]) > 3:
+            unique_movies.append(movie)
+    return(unique_movies)
+
 
 
 
@@ -162,17 +192,36 @@ def main():
     #
     # user_one_normalized_ratings =user_rating_normalized_list(180, movie_list, user_list)
 
-    v = user_rating_normalized_list(180, movie_list, user_list)
-    w = user_rating_normalized_list(180, movie_list, user_list)
-
-    distance = euclidean_distance(v, w)
-    print(distance)
-
-
+    # v = user_rating_normalized_list(942, movie_list, user_list)
+    # w = user_rating_normalized_list(180, movie_list, user_list)
     #
+    # distance = euclidean_distance(v, w)
+    # print(distance)
+    #
+    # normalized_dict_ratings =(normalized_dict_of_users(user_list, movie_list))
+
+
     # two_user_normalized_list(1, 2, movie_list, user_list)
 
+    # print(normalized_dict_of_users(user_list, movie_list))
 
+    normalized_dict_ratings = normalized_dict_of_users(user_list, movie_list)
+
+    related_user_dict = find_similar_user(normalized_dict_ratings, 400)
+
+    most_related_user = (max(related_user_dict, key=lambda k: related_user_dict[k]))
+
+    print(most_related_user)
+
+    print(user_list[most_related_user - 1])
+
+    # print(user_list[0])
+
+    movie_suggestion_list = (return_movie_suggestion(400, most_related_user, user_list))
+
+    for movie in movie_list:
+        if movie.movie_id in movie_suggestion_list:
+            print(movie.movie_title)
 
 
 
