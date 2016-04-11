@@ -54,6 +54,9 @@ def show_pop(*args):
 
 
 def show_pop_not_rated(*args):
+
+    user_input = int(user_id_input.get())
+
     rating_list = create_rating_list()
 
     movie_ratings = create_movie_ratings_dict(rating_list)
@@ -64,7 +67,7 @@ def show_pop_not_rated(*args):
 
     user_list = create_user_list(all_ratings_by_user)
 
-    unrated_pop = print_top_twenty_titles_not_rated(movie_list, user_list, user_input_id)
+    unrated_pop = print_top_twenty_titles_not_rated(movie_list, user_list, user_input)
 
 
 
