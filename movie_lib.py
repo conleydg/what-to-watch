@@ -3,7 +3,7 @@ class Rating:
         self.user_id = int(dictionary['user_id'])
         self.item_id = int(dictionary['item_id'])
         self.rating = dictionary['rating']
-        # self.timestamp = dictionary['timestamp']
+
 
 
     def __str__(self):
@@ -51,12 +51,6 @@ class User:
         self.all_ratings_by_user = all_ratings_by_user[int(dictionary['user_id'])]
 
 
-    # def all_ratings_by_user(self, dictinary, rating_list):
-    #     all_ratings_by_user = []
-    #     for rating in rating_list:
-    #         if self.user_id == raiting_list.user_id:
-    #             all_ratings_by_user.append({rating_list.movie_id: rating_list.user_id})
-    #     return self.all_ratings_by_user
 
 
 

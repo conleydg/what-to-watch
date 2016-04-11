@@ -142,87 +142,11 @@ def main():
     # unrated_pop = print_top_twenty_titles_not_rated(movie_list, user_list, 17)
 
 
-    #
-    #
+
     # print(print_top_twenty_titles(movie_list))
 
 
 
-
-
-    #
-    # print(un_reviewed_movies)
-
-
-
-
-    # for user in user_list:
-    #     print(user.user_id)
-
-    # print(user_list[42].all_ratings_by_user[272])
-
-
-    # print(movie_list[1])
-
-    # top_twenty = (top_twenty_movies(movie_list))
-    #
-    #
-    # print(top_twenty)
-
-    # print(movie_list)
-    #
-    # for movie in movie_list:
-    #     print(str(movie))
-
-
-    # movies_sorted_by_avg_rating = Movie.print_top_twenty_movies(movie_list)
-
-
-    #
-    #
-    # print(len(movie_list))
-    #
-    # un_reviewed_movies = Movie.remove_movie_if_user_has_rated(user_list, movie_list, 17)
-    #
-    #
-    # print(len(un_reviewed_movies))
-    #
-    # print(len(movie_list))
-    #
-    #
-    # print(len(user_list[17].all_ratings_by_user))
-    #
-    # print(len(movie_list))
-    #
-    # top_twenty_not_reviewed = Movie.print_top_twenty_movies(un_reviewed_movies)
-    #
-    # print(top_twenty_not_reviewed[-20:-1])
-
-
-    # print(user_list[0])
-    # print(movie_list[0])
-
-    #
-    # print((user_list[17].all_ratings_by_user))
-
-    #
-    # print(user_list[180])
-    # print(user_list[180].all_ratings_by_user[1295])
-    #
-    # user_one_normalized_ratings =user_rating_normalized_list(180, movie_list, user_list)
-
-    # v = user_rating_normalized_list(942, movie_list, user_list)
-    # w = user_rating_normalized_list(180, movie_list, user_list)
-    #
-    # distance = euclidean_distance(v, w)
-    # print(distance)
-    #
-    # normalized_dict_ratings =(normalized_dict_of_users(user_list, movie_list))
-
-
-    # two_user_normalized_list(1, 2, movie_list, user_list)
-
-    # print(normalized_dict_of_users(user_list, movie_list))
 
     # normalized_dict_ratings = normalized_dict_of_users(user_list, movie_list)
     #
@@ -231,10 +155,10 @@ def main():
     # most_related_user = (max(related_user_dict, key=lambda k: related_user_dict[k]))
     #
     # print(most_related_user)
-    # #
-    # # print(user_list[most_related_user - 1])
     #
-    # # print(user_list[0])
+    # print(user_list[most_related_user - 1])
+    #
+    # print(user_list[0])
     #
     # movie_suggestion_list = (return_movie_suggestion(97, most_related_user, user_list))
     #
