@@ -27,12 +27,13 @@ class Movie():
         new_list = []
         for movie in movie_list:
             if len(movie.all_ratings) > 5:
-                new_list.append({'average rating':movie.average_rating, 'movie id': movie.movie_id})
-        return sorted(new_list, key=lambda k: k['average rating'])
+                new_list.append({'average rating':movie.average_rating, 'movie_id': movie.movie_id})
+        new_list = sorted(new_list, key=lambda k: k['average rating'])
+        return new_list[-20:]
 
 
     @staticmethod
-    def remove_movie_if_user_has_rated(user_list, movie_list, user_id):
+    def remove_movie_if_user_has_rated(movie_list, user_list, user_id):
         un_reviewed_movies = []
         for movie in movie_list:
             if movie.movie_id not in (user_list[(user_id)].all_ratings_by_user):

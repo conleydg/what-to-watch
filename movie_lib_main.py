@@ -1,3 +1,5 @@
+import tkinter as tk
+
 import csv
 import math
 from movie_lib import *
@@ -40,12 +42,6 @@ def top_twenty_movies(movie_list):
     return newlist
 
 
-# def remove_movie_if_user_has_rated(user_list, movie_list, user_id):
-#     un_reviewed_movies = movie_list
-#     for movie_number in (user_list[user_id].all_ratings_by_user):
-#         un_reviewed_movies.remove[movie_numer - 1]
-#     return un_reviewed_movies
-
 def user_rating_normalized_list(user_id, movie_list, user_list):
     normalized_list = [0] * len(movie_list)
     index =0
@@ -81,12 +77,13 @@ def normalized_dict_of_users(user_list, movie_list):
 def find_similar_user(normalized_dict_ratings, user_id):
     user_index = 0
     highest_similar_user = {}
-    v = normalized_dict_ratings[user_id]
+    v = normalized_dict_ratings[(user_id)]
     for user in normalized_dict_ratings:
         w = normalized_dict_ratings[user]
         euc_relationship = euclidean_distance(v, w)
         highest_similar_user[user_index] = euc_relationship
         user_index += 1
+        print(user_index, euc_relationship)
     highest_similar_user[user_id] -= 1
     return highest_similar_user
 
@@ -94,12 +91,38 @@ def find_similar_user(normalized_dict_ratings, user_id):
 def return_movie_suggestion(user_id, most_related_user, user_list):
     unique_movies = []
     for movie in user_list[most_related_user - 1].all_ratings_by_user:
-        if movie not in user_list[user_id - 1].all_ratings_by_user and int(user_list[most_related_user - 1].all_ratings_by_user[movie]) > 3:
+        if movie not in user_list[int(user_id) - 1].all_ratings_by_user and int(user_list[most_related_user - 1].all_ratings_by_user[movie]) > 3:
             unique_movies.append(movie)
-    return(unique_movies)
+    return unique_movies
 
+def create_movie_ratings_dict(rating_list):
+    movie_ratings = {}
+    for movie in rating_list:
+        if movie.item_id in movie_ratings:
+            (movie_ratings[movie.item_id]).append(int(movie.rating))
+        else:
+            movie_ratings[movie.item_id] = [int(movie.rating)]
+    return movie_ratings
 
+def create_all_ratings_by_user_dict(rating_list):
+    all_ratings_by_user = {}
+    for rating in rating_list:
+        if rating.user_id in all_ratings_by_user:
+            all_ratings_by_user[rating.user_id][rating.item_id] = rating.rating
+        else:
+            all_ratings_by_user[rating.user_id]= {rating.item_id: rating.rating}
+    return all_ratings_by_user
 
+def print_top_twenty_titles(movie_list,):
+    movies_sorted_by_avg_rating = Movie.print_top_twenty_movies(movie_list)
+    for movie in movies_sorted_by_avg_rating:
+        print(movie_list[movie['movie_id']].movie_title)
+
+def print_top_twenty_titles_not_rated(movie_list, user_list, user_id):
+    unreviewed_movies = Movie.remove_movie_if_user_has_rated(movie_list, user_list, user_id)
+    movies_sorted_by_avg_rating = Movie.print_top_twenty_movies(unreviewed_movies)
+    for movie in movies_sorted_by_avg_rating:
+        print(movie_list[movie['movie_id']].movie_title)
 
 
 
@@ -108,33 +131,29 @@ def main():
 
     rating_list = create_rating_list()
 
-
-
-    movie_ratings = {}
-
-    for movie in rating_list:
-        if movie.item_id in movie_ratings:
-            (movie_ratings[movie.item_id]).append(int(movie.rating))
-        else:
-            movie_ratings[movie.item_id] = [int(movie.rating)]
-
+    movie_ratings = create_movie_ratings_dict(rating_list)
 
     movie_list = create_movie_list(movie_ratings)
 
-    all_ratings_for_user = {}
-
-
-
-    all_ratings_by_user = {}
-    for rating in rating_list:
-        if rating.user_id in all_ratings_by_user:
-            all_ratings_by_user[rating.user_id][rating.item_id] = rating.rating
-        else:
-            all_ratings_by_user[rating.user_id]= {rating.item_id: rating.rating}
-
-
+    all_ratings_by_user = create_all_ratings_by_user_dict(rating_list)
 
     user_list = create_user_list(all_ratings_by_user)
+
+    # unrated_pop = print_top_twenty_titles_not_rated(movie_list, user_list, 17)
+
+
+    #
+    #
+    # print(print_top_twenty_titles(movie_list))
+
+
+
+
+
+    #
+    # print(un_reviewed_movies)
+
+
 
 
     # for user in user_list:
@@ -155,10 +174,10 @@ def main():
     # for movie in movie_list:
     #     print(str(movie))
 
-    #
-    # top_twenty = Movie.print_top_twenty_movies(movie_list)
-    # # print(len(top_twenty))
-    # print(top_twenty[-20:-1])
+
+    # movies_sorted_by_avg_rating = Movie.print_top_twenty_movies(movie_list)
+
+
     #
     #
     # print(len(movie_list))
@@ -205,23 +224,23 @@ def main():
 
     # print(normalized_dict_of_users(user_list, movie_list))
 
-    normalized_dict_ratings = normalized_dict_of_users(user_list, movie_list)
-
-    related_user_dict = find_similar_user(normalized_dict_ratings, 400)
-
-    most_related_user = (max(related_user_dict, key=lambda k: related_user_dict[k]))
-
-    print(most_related_user)
-
-    print(user_list[most_related_user - 1])
-
-    # print(user_list[0])
-
-    movie_suggestion_list = (return_movie_suggestion(400, most_related_user, user_list))
-
-    for movie in movie_list:
-        if movie.movie_id in movie_suggestion_list:
-            print(movie.movie_title)
+    # normalized_dict_ratings = normalized_dict_of_users(user_list, movie_list)
+    #
+    # related_user_dict = find_similar_user(normalized_dict_ratings, 97)
+    #
+    # most_related_user = (max(related_user_dict, key=lambda k: related_user_dict[k]))
+    #
+    # print(most_related_user)
+    # #
+    # # print(user_list[most_related_user - 1])
+    #
+    # # print(user_list[0])
+    #
+    # movie_suggestion_list = (return_movie_suggestion(97, most_related_user, user_list))
+    #
+    # for movie in movie_list:
+    #     if movie.movie_id in movie_suggestion_list:
+    #         print(movie.movie_title)
 
 
 
